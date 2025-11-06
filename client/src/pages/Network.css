@@ -1,0 +1,121 @@
+.network-container {
+  min-height: calc(100vh - 60px);
+  background: #f3f2ef;
+  padding: 2rem 0;
+}
+
+.network-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.network-header {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.network-header h1 {
+  font-size: 2rem;
+  color: #000000de;
+  margin-bottom: 0.5rem;
+}
+
+.network-header p {
+  color: #666;
+  font-size: 1rem;
+}
+
+.network-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.network-card {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  display: flex;
+  gap: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.network-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.network-card-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.75rem;
+  flex-shrink: 0;
+}
+
+.network-card-content h3 {
+  font-size: 1.25rem;
+  color: #000000de;
+  margin-bottom: 0.5rem;
+}
+
+.network-card-content p {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.network-count {
+  display: inline-block;
+  background: #e7f3ff;
+  color: #0a66c2;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.coming-soon {
+  background: white;
+  border-radius: 8px;
+  padding: 3rem;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.coming-soon h2 {
+  font-size: 1.75rem;
+  color: #000000de;
+  margin-bottom: 0.75rem;
+}
+
+.coming-soon p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .network-sections {
+    grid-template-columns: 1fr;
+  }
+
+  .network-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .coming-soon {
+    padding: 2rem 1rem;
+  }
+}

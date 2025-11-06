@@ -1,0 +1,223 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #0a66c2;
+  --primary-hover: #004182;
+  --secondary-color: #70b5f9;
+  --dark-color: #191919;
+  --light-gray: #f3f2ef;
+  --border-color: #e0e0e0;
+  --text-primary: #000000e6;
+  --text-secondary: #00000099;
+  --success-color: #057642;
+  --danger-color: #cc1016;
+  --white: #ffffff;
+  --shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--light-gray);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+input,
+textarea {
+  font-family: inherit;
+  outline: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--light-gray);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c0c0c0;
+}
+
+/* Loading Animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinner {
+  border: 3px solid var(--light-gray);
+  border-top: 3px solid var(--primary-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 50px auto;
+}
+
+/* Utility Classes */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+  
+  .container {
+    padding: 0 10px;
+  }
+}
+
+/* Project-wide responsive enhancements (additional overrides) */
+
+/* Tablet (<=1024px) adjustments */
+@media (max-width: 1024px) {
+  /* Navbar: compact layout */
+  .navbar-container { padding: 0 12px; }
+  /* prefer a max-width to avoid overriding component styles */
+  .search-input { max-width: 160px; width: 100%; }
+  .navbar-logo span { display: none; }
+  .nav-link span { display: none; }
+
+  /* Feed: single column handled per-page, ensure spacing */
+  .feed-container { padding: 16px; grid-template-columns: 1fr; }
+  /* hide sidebars on tablet using normal specificity (avoid !important) */
+  .feed-sidebar-left, .feed-sidebar-right { display: none; }
+
+  /* Profile: narrower layout and stack header actions */
+  .profile-wrapper { max-width: 720px; padding: 0 16px; }
+  .profile-banner { height: 160px; }
+  .profile-avatar { width: 120px; height: 120px; }
+  .profile-avatar-wrapper { margin-top: -60px; }
+
+  /* Post card: adjust paddings */
+  .post-header, .post-content, .post-actions { padding-left: 1rem; padding-right: 1rem; }
+
+  /* Create post: reduce padding and textarea height */
+  .create-post-card { padding: 1rem; }
+  .create-post-textarea { min-height: 64px; }
+
+  /* Suggestions / side widgets: stack items tighter */
+  .suggestion-item, .news-item { padding: 10px 12px; }
+}
+
+/* Mobile (<=768px) targeted rules */
+@media (max-width: 768px) {
+  /* Global adjustments */
+  body { font-size: 15px; }
+
+  /* Navbar compact: show only icons and avatar */
+  .navbar-search { display: none; }
+  .nav-link span { display: none; }
+  .navbar-user .navbar-username { display: none; }
+
+  /* Feed: make posts full width and reduce gutters */
+  .feed-container { padding: 12px 8px; grid-template-columns: 1fr; gap: 12px; }
+
+  /* Profile: stack info vertically and move actions under avatar */
+  .profile-content { padding: 0 1rem 1rem; }
+  .profile-main-info { display: flex; flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .profile-avatar-wrapper { margin-top: -50px; }
+  .profile-actions { width: 100%; display: flex; gap: 0.5rem; justify-content: flex-start; flex-wrap: wrap; }
+
+  /* PostCard adjustments */
+  .post-avatar { width: 40px; height: 40px; }
+  .post-user-info h4 { font-size: 1rem; }
+
+  /* Create post: stack actions */
+  .create-post-actions { flex-direction: column; gap: 0.5rem; }
+
+  /* Auth & Onboarding: center cards and reduce header size */
+  .auth-container.with-header { padding-top: 70px; }
+  .auth-card { padding: 1rem; }
+
+  /* Messaging and network lists: full width items */
+  .suggestion-item, .news-item, .message-item { padding-left: 12px; padding-right: 12px; }
+
+  /* Make search dropdown fit mobile width when shown */
+  .search-dropdown { left: 8px; right: 8px; width: auto; }
+}
+
+/* Small phones (<=480px) — tighter adjustments */
+@media (max-width: 480px) {
+  body { font-size: 14px; }
+  .navbar-container { padding: 0 10px; }
+  .profile-avatar { width: 96px; height: 96px; }
+  .profile-banner { height: 120px; }
+  .post-action-btn { padding: 0.6rem 0.8rem; }
+  .follow-btn, .search-btn { padding: 4px 10px; font-size: 0.8rem; }
+}
+
+/* Utility: stack children vertically on small screens */
+.stack-mobile {
+  display: flex;
+  gap: 0.5rem;
+}
+@media (max-width: 768px) {
+  .stack-mobile { flex-direction: column; }
+}
+
+/* Prevent large images from overflowing on small devices */
+img { max-width: 100%; height: auto; }

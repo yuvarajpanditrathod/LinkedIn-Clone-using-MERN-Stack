@@ -1,0 +1,375 @@
+/* Navbar Styles for Auth Pages */
+.landing-navbar {
+  background: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.landing-logo {
+  cursor: pointer;
+}
+
+.logo-icon {
+  font-size: 2.5rem;
+  color: #0a66c2;
+}
+
+.logo-text {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #0a66c2;
+  margin-left: 0.25rem;
+}
+
+.landing-nav-actions .btn-outline-primary {
+  color: #0a66c2;
+  border-color: #0a66c2;
+  font-weight: 600;
+}
+
+.landing-nav-actions .btn-outline-primary:hover {
+  background: #0a66c2;
+  border-color: #0a66c2;
+  color: white;
+}
+
+.auth-container {
+  min-height: 100vh;
+  background: #ffffff; /* use white background like the target image */
+  padding-top: 0;
+}
+
+.auth-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 64px); /* center below header */
+  padding: 12px 16px;
+}
+
+.auth-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  max-width: 1100px;
+  width: 100%;
+  align-items: center;
+}
+
+.auth-left {
+  color: var(--white);
+}
+
+.auth-left h1 {
+  font-size: 3rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.auth-left p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  opacity: 0.95;
+}
+
+.auth-features {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.feature-icon {
+  font-size: 2rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.feature p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.auth-right {
+  width: 100%;
+}
+
+.auth-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 1.25rem 1.25rem; /* tighter */
+  box-shadow: 0 8px 28px rgba(31, 43, 65, 0.08);
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto; /* centered vertically via .auth-content */
+}
+
+.auth-card h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.form-group input {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.1);
+}
+
+.btn {
+  padding: 0.875rem 1.5rem;
+  border-radius: 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(10, 102, 194, 0.3);
+}
+
+.btn-block {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* Social sign-in buttons */
+.social-signin {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.675rem 1rem;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 30px;
+  background: white;
+  color: #222;
+  font-weight: 600;
+  justify-content: center;
+  width: 100%;
+}
+
+.social-icon {
+  font-size: 1.05rem;
+}
+
+.social-legal {
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  line-height: 1.15;
+}
+
+.social-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 0.5rem 0 0.75rem;
+}
+
+.social-divider::before,
+.social-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e6e6e6;
+}
+
+.social-divider span {
+  padding: 0 10px;
+  color: #999;
+  font-size: 0.85rem;
+}
+
+.text-right { text-align: right; }
+
+/* Small LinkedIn logo in the corner for auth pages */
+.landing-navbar {
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  padding: 10px 14px; /* smaller header */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 88px;
+  z-index: 2000;
+}
+
+.landing-logo .logo-icon {
+  font-size: 2.5rem;
+}
+
+.landing-logo .logo-text {
+  font-size: 2rem;
+}
+
+.landing-nav-actions { display: none; }
+
+/* Make sure the auth page content starts below the small header visually */
+.auth-container.with-header {
+  padding-top: 72px; /* allow space for fixed header */
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.auth-footer p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.auth-footer a {
+  color: var(--primary-color);
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.auth-footer a:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+.alert {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.alert-danger {
+  background-color: #fee;
+  color: var(--danger-color);
+  border: 1px solid #fcc;
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+  .auth-wrapper {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .auth-left {
+    text-align: center;
+  }
+
+  .auth-left h1 {
+    font-size: 2.5rem;
+  }
+
+  .auth-features {
+    display: none;
+  }
+
+  .landing-nav-actions span {
+    display: none;
+  }
+
+  .auth-content {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    padding-top: 0;
+  }
+
+  .auth-content {
+    padding: 20px 10px;
+  }
+
+  .auth-card {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+
+  .auth-card h2 {
+    font-size: 1.5rem;
+  }
+
+  .auth-left h1 {
+    font-size: 2rem;
+  }
+
+  .logo-text {
+    font-size: 1.5rem;
+  }
+
+  .logo-icon {
+    font-size: 2rem;
+  }
+
+  .landing-nav-actions .btn {
+    padding: 0.5rem 1.5rem;
+    font-size: 0.875rem;
+  }
+}
