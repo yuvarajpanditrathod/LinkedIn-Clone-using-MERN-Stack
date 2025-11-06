@@ -17,7 +17,7 @@ Live repository: https://github.com/yuvarajpanditrathod/LinkedIn-Clone-using-MER
 
 Landing (hero) preview:
 
-![Landing preview](https://static.licdn.com/aero-v1/sc/h/dxf91zhqd2z6b0bwg85ktm5s4)
+![Landing preview](uploads/dashboard.png)
 
 Dashboard / Feed preview:
 
