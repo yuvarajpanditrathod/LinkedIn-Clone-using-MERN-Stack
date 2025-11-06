@@ -1,16 +1,15 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useCallback } from 'react';
 import axios from 'axios';
-import { AuthContext } from './AuthContext';
 
 export const PostContext = createContext();
 
 export const PostProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { user } = useContext(AuthContext);
+  // `user` is not required inside PostProvider — avoid unused variable warnings
 
   // Get all posts
-  const getPosts = async () => {
+  const getPosts = useCallback(async () => {
     setLoading(true);
     try {
       const res = await axios.get('/api/posts');
@@ -21,7 +20,7 @@ export const PostProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   // Create post
   const createPost = async (formData) => {

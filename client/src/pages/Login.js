@@ -56,7 +56,7 @@ const Login = () => {
             </button>
 
             <div className="social-legal">
-              By clicking Continue, you agree to LinkedIn's <a href="#">User Agreement</a>, <a href="#">Privacy Policy</a>, and <a href="#">Cookie Policy</a>.
+              By clicking Continue, you agree to LinkedIn's <a href="/terms" className="footer-link">User Agreement</a>, <a href="/privacy" className="footer-link">Privacy Policy</a>, and <a href="/cookies" className="footer-link">Cookie Policy</a>.
             </div>
 
             <div className="social-divider"><span>or</span></div>

@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { PostContext } from '../../context/PostContext';
-import { FaTrash } from 'react-icons/fa';
 import './CommentSection.css';
 
 const CommentSection = ({ post }) => {

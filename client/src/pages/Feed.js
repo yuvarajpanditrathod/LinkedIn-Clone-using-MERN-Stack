@@ -19,7 +19,7 @@ const Feed = () => {
 
   useEffect(() => {
     getPosts();
-  }, []);
+  }, [getPosts]);
 
   const handleNavigateToProfile = () => {
     if (user) {
@@ -67,7 +67,7 @@ const Feed = () => {
           <FaHashtag className="premium-icon" />
           <div>
             <p className="premium-text">Access exclusive tools & insights</p>
-            <a href="#" className="premium-link">Try Premium for free</a>
+            <a href="/premium" className="premium-link">Try Premium for free</a>
           </div>
         </div>
 

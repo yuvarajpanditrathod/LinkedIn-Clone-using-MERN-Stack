@@ -23,35 +23,32 @@ const Profile = () => {
   const isOwnProfile = currentUser && currentUser._id === userId;
 
   useEffect(() => {
-    fetchProfile();
-    if (currentUser && userId !== currentUser._id) {
-      fetchConnectionStatus();
-    }
-  }, [userId]);
-
-  const fetchProfile = async () => {
-    try {
-      const res = await axios.get(`/api/users/${userId}`);
-      setProfile(res.data.user);
-      setPosts(res.data.posts);
-    } catch (error) {
-      console.error('Fetch profile error:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchConnectionStatus = async () => {
-    try {
-      const res = await axios.get(`/api/connections/status/${userId}`);
-      if (res.data.success) {
-        setConnectionStatus(res.data.status);
-        if (res.data.requestId) setRequestId(res.data.requestId);
+    const load = async () => {
+      try {
+        const res = await axios.get(`/api/users/${userId}`);
+        setProfile(res.data.user);
+        setPosts(res.data.posts);
+      } catch (error) {
+        console.error('Fetch profile error:', error);
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      console.error('Fetch connection status error:', err);
-    }
-  };
+
+      if (currentUser && userId !== currentUser._id) {
+        try {
+          const res2 = await axios.get(`/api/connections/status/${userId}`);
+          if (res2.data.success) {
+            setConnectionStatus(res2.data.status);
+            if (res2.data.requestId) setRequestId(res2.data.requestId);
+          }
+        } catch (err) {
+          console.error('Fetch connection status error:', err);
+        }
+      }
+    };
+
+    load();
+  }, [userId, currentUser]);
 
   const handleSendRequest = async () => {
     try {

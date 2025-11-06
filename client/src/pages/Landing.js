@@ -235,37 +235,37 @@ const Landing = () => {
             <div className="col-6 col-lg-2 mb-4 mb-lg-0">
               <h6 className="footer-title">Navigation</h6>
               <ul className="list-unstyled">
-                <li><a href="#" className="footer-link">About</a></li>
-                <li><a href="#" className="footer-link">Careers</a></li>
-                <li><a href="#" className="footer-link">Advertising</a></li>
-                <li><a href="#" className="footer-link">Talent</a></li>
+                <li><a href="/about" className="footer-link">About</a></li>
+                <li><a href="/careers" className="footer-link">Careers</a></li>
+                <li><a href="/advertising" className="footer-link">Advertising</a></li>
+                <li><a href="/talent" className="footer-link">Talent</a></li>
               </ul>
             </div>
             <div className="col-6 col-lg-2 mb-4 mb-lg-0">
               <h6 className="footer-title">Solutions</h6>
               <ul className="list-unstyled">
-                <li><a href="#" className="footer-link">Marketing</a></li>
-                <li><a href="#" className="footer-link">Sales</a></li>
-                <li><a href="#" className="footer-link">Learning</a></li>
-                <li><a href="#" className="footer-link">Hiring</a></li>
+                <li><a href="/marketing" className="footer-link">Marketing</a></li>
+                <li><a href="/sales" className="footer-link">Sales</a></li>
+                <li><a href="/learning" className="footer-link">Learning</a></li>
+                <li><a href="/hiring" className="footer-link">Hiring</a></li>
               </ul>
             </div>
             <div className="col-6 col-lg-2 mb-4 mb-lg-0">
               <h6 className="footer-title">Quick Links</h6>
               <ul className="list-unstyled">
-                <li><a href="#" className="footer-link">Jobs</a></li>
-                <li><a href="#" className="footer-link">People</a></li>
-                <li><a href="#" className="footer-link">Learning</a></li>
-                <li><a href="#" className="footer-link">Posts</a></li>
+                <li><a href="/jobs" className="footer-link">Jobs</a></li>
+                <li><a href="/people" className="footer-link">People</a></li>
+                <li><a href="/learning" className="footer-link">Learning</a></li>
+                <li><a href="/posts" className="footer-link">Posts</a></li>
               </ul>
             </div>
             <div className="col-6 col-lg-3">
               <h6 className="footer-title">Resources</h6>
               <ul className="list-unstyled">
-                <li><a href="#" className="footer-link">Help Center</a></li>
-                <li><a href="#" className="footer-link">Privacy Policy</a></li>
-                <li><a href="#" className="footer-link">Terms of Service</a></li>
-                <li><a href="#" className="footer-link">Community</a></li>
+                <li><a href="/help" className="footer-link">Help Center</a></li>
+                <li><a href="/privacy" className="footer-link">Privacy Policy</a></li>
+                <li><a href="/terms" className="footer-link">Terms of Service</a></li>
+                <li><a href="/community" className="footer-link">Community</a></li>
               </ul>
             </div>
           </div>

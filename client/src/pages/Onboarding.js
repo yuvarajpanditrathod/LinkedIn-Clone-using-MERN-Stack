@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import './Onboarding.css';
-import { FaCheckCircle, FaCircle } from 'react-icons/fa';
+import { FaCheckCircle } from 'react-icons/fa';
 
 const Onboarding = () => {
   const navigate = useNavigate();
