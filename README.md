@@ -21,7 +21,7 @@ Landing (hero) preview:
 
 Dashboard / Feed preview:
 
-![Dashboard preview](https://static.licdn.com/aero-v1/sc/h/43h6n82li4xu0q23s8jqizk6j)
+![Dashboard preview](uploads/image.png)
 
 ---
 
