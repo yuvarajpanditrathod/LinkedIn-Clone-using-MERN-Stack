@@ -1,5 +1,5 @@
-import React, { createContext, useState, useCallback } from 'react';
-import axios from 'axios';
+import React, { createContext, useState, useCallback } from "react";
+import axios from "axios";
 
 export const PostContext = createContext();
 
@@ -12,10 +12,17 @@ export const PostProvider = ({ children }) => {
   const getPosts = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await axios.get('/api/posts');
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/posts`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       setPosts(res.data.posts);
     } catch (error) {
-      console.error('Get posts error:', error);
+      console.error("Get posts error:", error);
       // Notification suppressed: Failed to fetch posts
     } finally {
       setLoading(false);
@@ -25,17 +32,17 @@ export const PostProvider = ({ children }) => {
   // Create post
   const createPost = async (formData) => {
     try {
-      const res = await axios.post('/api/posts', formData, {
+      const res = await axios.post("/api/posts", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          "Content-Type": "multipart/form-data",
+        },
       });
-      
-  setPosts([res.data.post, ...posts]);
-  // Post created successfully (notification suppressed)
+
+      setPosts([res.data.post, ...posts]);
+      // Post created successfully (notification suppressed)
       return { success: true };
     } catch (error) {
-      const message = error.response?.data?.message || 'Failed to create post';
+      const message = error.response?.data?.message || "Failed to create post";
       console.error(message);
       return { success: false, message };
     }
@@ -46,15 +53,17 @@ export const PostProvider = ({ children }) => {
     try {
       const res = await axios.put(`/api/posts/${postId}`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          "Content-Type": "multipart/form-data",
+        },
       });
-      
-  setPosts(posts.map(post => post._id === postId ? res.data.post : post));
-  // Post updated successfully (notification suppressed)
+
+      setPosts(
+        posts.map((post) => (post._id === postId ? res.data.post : post))
+      );
+      // Post updated successfully (notification suppressed)
       return { success: true };
     } catch (error) {
-      const message = error.response?.data?.message || 'Failed to update post';
+      const message = error.response?.data?.message || "Failed to update post";
       console.error(message);
       return { success: false, message };
     }
@@ -64,11 +73,11 @@ export const PostProvider = ({ children }) => {
   const deletePost = async (postId) => {
     try {
       await axios.delete(`/api/posts/${postId}`);
-  setPosts(posts.filter(post => post._id !== postId));
-  // Post deleted successfully (notification suppressed)
+      setPosts(posts.filter((post) => post._id !== postId));
+      // Post deleted successfully (notification suppressed)
       return { success: true };
     } catch (error) {
-      const message = error.response?.data?.message || 'Failed to delete post';
+      const message = error.response?.data?.message || "Failed to delete post";
       console.error(message);
       return { success: false, message };
     }
@@ -78,9 +87,11 @@ export const PostProvider = ({ children }) => {
   const likePost = async (postId) => {
     try {
       const res = await axios.post(`/api/posts/${postId}/like`);
-      setPosts(posts.map(post => post._id === postId ? res.data.post : post));
+      setPosts(
+        posts.map((post) => (post._id === postId ? res.data.post : post))
+      );
     } catch (error) {
-      const message = error.response?.data?.message || 'Failed to like post';
+      const message = error.response?.data?.message || "Failed to like post";
       console.error(message);
     }
   };
@@ -89,11 +100,13 @@ export const PostProvider = ({ children }) => {
   const addComment = async (postId, text) => {
     try {
       const res = await axios.post(`/api/posts/${postId}/comment`, { text });
-  setPosts(posts.map(post => post._id === postId ? res.data.post : post));
-  // Comment added (notification suppressed)
+      setPosts(
+        posts.map((post) => (post._id === postId ? res.data.post : post))
+      );
+      // Comment added (notification suppressed)
       return { success: true };
     } catch (error) {
-      const message = error.response?.data?.message || 'Failed to add comment';
+      const message = error.response?.data?.message || "Failed to add comment";
       console.error(message);
       return { success: false, message };
     }
@@ -102,12 +115,17 @@ export const PostProvider = ({ children }) => {
   // Delete comment
   const deleteComment = async (postId, commentId) => {
     try {
-      const res = await axios.delete(`/api/posts/${postId}/comment/${commentId}`);
-  setPosts(posts.map(post => post._id === postId ? res.data.post : post));
-  // Comment deleted (notification suppressed)
+      const res = await axios.delete(
+        `/api/posts/${postId}/comment/${commentId}`
+      );
+      setPosts(
+        posts.map((post) => (post._id === postId ? res.data.post : post))
+      );
+      // Comment deleted (notification suppressed)
       return { success: true };
     } catch (error) {
-      const message = error.response?.data?.message || 'Failed to delete comment';
+      const message =
+        error.response?.data?.message || "Failed to delete comment";
       console.error(message);
       return { success: false, message };
     }
@@ -122,7 +140,7 @@ export const PostProvider = ({ children }) => {
     deletePost,
     likePost,
     addComment,
-    deleteComment
+    deleteComment,
   };
 
   return <PostContext.Provider value={value}>{children}</PostContext.Provider>;
