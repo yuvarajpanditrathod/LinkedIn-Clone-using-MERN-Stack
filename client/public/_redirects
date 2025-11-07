@@ -1,1 +1,3 @@
 /*    /index.html   200
+/api/*  https://linkedin-clone-api-7q30.onrender.com/api/:splat  200
+/uploads/*  https://linkedin-clone-api-7q30.onrender.com/uploads/:splat  200
