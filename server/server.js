@@ -31,7 +31,8 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 // MongoDB Connection
 const mongoUri = process.env.MONGODB_URI;
 if (mongoUri) {
-  mongoose.connect(mongoUri)
+  // set a reasonable server selection timeout so failures are noticed quickly during development
+  mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 10000 })
     .then(() => console.log('✅ MongoDB Connected Successfully'))
     .catch((err) => {
       console.error('❌ MongoDB Connection Error:', err.message);
@@ -43,6 +44,11 @@ if (mongoUri) {
         console.warn('Continuing without DB connection — API routes that require DB will fail until a valid MONGODB_URI is provided.');
       }
     });
+
+  // Helpful connection event logging
+  mongoose.connection.on('connected', () => console.log('Mongoose connection state: connected'));
+  mongoose.connection.on('error', (err) => console.error('Mongoose connection error:', err && err.message));
+  mongoose.connection.on('disconnected', () => console.warn('Mongoose connection state: disconnected'));
 } else {
   console.warn('⚠️  MONGODB_URI not set. Set it in .env (see .env.example). Server will continue but DB features will fail.');
 }
@@ -83,8 +89,22 @@ app.use((req, res) => {
 
 // Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📱 Environment: ${process.env.NODE_ENV || 'development'}`);
+});
+
+// Graceful listen error handling (e.g. EADDRINUSE)
+server.on('error', (err) => {
+  if (err && err.code === 'EADDRINUSE') {
+    console.error(`❌ Port ${PORT} is already in use. If you're running in a platform/build environment (like Vercel), do not run a long-lived server during the build step. Use the platform's serverless functions or host the API separately.`);
+    // In production, exit so the platform/build system knows something is wrong.
+    if (process.env.NODE_ENV === 'production') {
+      process.exit(1);
+    }
+  } else {
+    console.error('Server error:', err);
+    throw err;
+  }
 });
 

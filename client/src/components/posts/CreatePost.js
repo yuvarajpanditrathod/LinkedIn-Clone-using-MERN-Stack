@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { PostContext } from '../../context/PostContext';
-import { FaImage, FaTimes } from 'react-icons/fa';
+import { FaImage, FaTimes, FaVideo } from 'react-icons/fa';
 import './CreatePost.css';
 
 const CreatePost = () => {
@@ -11,6 +11,7 @@ const CreatePost = () => {
   const [content, setContent] = useState('');
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [isVideo, setIsVideo] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleImageChange = (e) => {
@@ -18,12 +19,14 @@ const CreatePost = () => {
     if (file) {
       setImage(file);
       setImagePreview(URL.createObjectURL(file));
+      setIsVideo(file.type.startsWith('video/'));
     }
   };
 
   const removeImage = () => {
     setImage(null);
     setImagePreview(null);
+    setIsVideo(false);
   };
 
   const handleSubmit = async (e) => {
@@ -71,7 +74,14 @@ const CreatePost = () => {
 
           {imagePreview && (
             <div className="image-preview">
-              <img src={imagePreview} alt="Preview" />
+              {isVideo ? (
+                <video controls className="video-preview">
+                  <source src={imagePreview} type={image ? image.type : 'video/mp4'} />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <img src={imagePreview} alt="Preview" />
+              )}
               <button
                 type="button"
                 onClick={removeImage}
@@ -89,6 +99,17 @@ const CreatePost = () => {
               <input
                 type="file"
                 accept="image/*"
+                onChange={handleImageChange}
+                hidden
+              />
+            </label>
+
+            <label className="upload-image-btn">
+              <FaVideo />
+              <span>Video</span>
+              <input
+                type="file"
+                accept="video/mp4"
                 onChange={handleImageChange}
                 hidden
               />

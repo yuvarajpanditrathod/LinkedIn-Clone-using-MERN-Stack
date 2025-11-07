@@ -39,8 +39,6 @@
   transition: color 0.3s ease;
 }
 
-.post-user:hover .post-user-info h4 {
-}
 
 .post-user-info p {
   font-size: 0.85rem;
@@ -127,6 +125,13 @@
   max-height: 500px;
   object-fit: cover;
   border-radius: 8px;
+}
+
+.post-video {
+  width: 100%;
+  max-height: 500px;
+  border-radius: 8px;
+  background: #000;
 }
 
 .post-stats {

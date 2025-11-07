@@ -90,8 +90,14 @@ exports.login = async (req, res) => {
     }
 
     // Check password
-    const isPasswordMatch = await user.comparePassword(password);
+    let isPasswordMatch = false;
+    try {
+      isPasswordMatch = await user.comparePassword(password);
+    } catch (err) {
+      console.error('Error comparing password for user', user._id, err.message);
+    }
     if (!isPasswordMatch) {
+      console.log('Login failed: password mismatch for', email);
       return res.status(401).json({
         success: false,
         message: 'Invalid credentials'

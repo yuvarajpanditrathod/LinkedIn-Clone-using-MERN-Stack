@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -49,87 +49,101 @@ const Register = () => {
     setIsLoading(false);
   };
 
+  // prevent page scroll while auth page is mounted
+  useEffect(() => {
+    document.body.classList.add('auth-no-scroll');
+    return () => document.body.classList.remove('auth-no-scroll');
+  }, []);
+
   return (
-  <div className="auth-container with-header">
-      <div className="auth-content">
-        <div className="auth-card">
-          <h2>Make the most of your professional life</h2>
+  <div className="auth-container d-flex align-items-center">
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-12 col-md-8 col-lg-5">
+            <div className="card auth-card shadow-sm rounded-4">
+              <div className="card-body p-4">
+                <h2 className="h5 mb-2">Make the most of your professional life</h2>
 
-          {error && <div className="alert alert-danger">{error}</div>}
+                {error && <div className="alert alert-danger">{error}</div>}
 
-            <form onSubmit={onSubmit} className="auth-form">
-              <div className="form-group">
-                <label htmlFor="name">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={name}
-                  onChange={onChange}
-                  required
-                  minLength="2"
-                  placeholder="Enter your full name"
-                />
+                <form onSubmit={onSubmit} className="auth-form">
+                  <div className="mb-3">
+                    <label htmlFor="name" className="form-label small fw-semibold">Name</label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={name}
+                      onChange={onChange}
+                      required
+                      minLength="2"
+                      placeholder="Enter your full name"
+                      className="form-control"
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <label htmlFor="email" className="form-label small fw-semibold">Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={email}
+                      onChange={onChange}
+                      required
+                      placeholder="Enter your email"
+                      className="form-control"
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <label htmlFor="password" className="form-label small fw-semibold">Password (6 or more characters)</label>
+                    <input
+                      type="password"
+                      id="password"
+                      name="password"
+                      value={password}
+                      onChange={onChange}
+                      required
+                      minLength="6"
+                      placeholder="Create a password"
+                      className="form-control"
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <label htmlFor="confirmPassword" className="form-label small fw-semibold">Confirm Password</label>
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      value={confirmPassword}
+                      onChange={onChange}
+                      required
+                      minLength="6"
+                      placeholder="Confirm your password"
+                      className="form-control"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="btn btn-primary w-100 rounded-pill"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? 'Creating account...' : 'Agree & Join'}
+                  </button>
+                </form>
+
+                <div className="auth-footer text-center mt-4">
+                  <p className="mb-0 small text-muted">Already have an account? <Link to="/login">Sign in</Link></p>
+                </div>
               </div>
-
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={email}
-                  onChange={onChange}
-                  required
-                  placeholder="Enter your email"
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="password">Password (6 or more characters)</label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={password}
-                  onChange={onChange}
-                  required
-                  minLength="6"
-                  placeholder="Create a password"
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="confirmPassword">Confirm Password</label>
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  value={confirmPassword}
-                  onChange={onChange}
-                  required
-                  minLength="6"
-                  placeholder="Confirm your password"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="btn btn-primary btn-block"
-                disabled={isLoading}
-              >
-                {isLoading ? 'Creating account...' : 'Agree & Join'}
-              </button>
-            </form>
-
-            <div className="auth-footer">
-              <p>
-                Already have an account? <Link to="/login">Sign in</Link>
-              </p>
             </div>
           </div>
         </div>
       </div>
+    </div>
   );
 };
 

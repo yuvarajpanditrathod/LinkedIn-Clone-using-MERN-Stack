@@ -94,7 +94,14 @@ const PostCard = ({ post }) => {
       <div className="post-content">
         <p>{post.content}</p>
         {post.image && (
-          <img src={post.image} alt="Post" className="post-image" />
+          (/\.(mp4|webm|mov|ogg)$/i).test(post.image) ? (
+            <video controls className="post-video">
+              <source src={post.image} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          ) : (
+            <img src={post.image} alt="Post" className="post-image" />
+          )
         )}
       </div>
 

@@ -38,6 +38,14 @@ exports.getUserProfile = async (req, res) => {
 
 exports.updateUserProfile = async (req, res) => {
   try {
+    // Debug/logging to help diagnose intermittent 'user not found' reports
+    console.log('UpdateUserProfile called. req.user:', req.user ? req.user._id : null, 'params.id:', req.params.id, 'files:', req.files ? Object.keys(req.files) : {});
+
+    // Ensure authentication middleware populated req.user
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: 'Not authorized, no authenticated user' });
+    }
+
     // Resolve the target user ID. Support both routes:
     // - PUT /api/users/profile  (no :id param)
     // - PUT /api/users/:id      (specific user id)
@@ -64,10 +72,18 @@ exports.updateUserProfile = async (req, res) => {
     if (education) updateData.education = JSON.parse(education);
     if (onboardingComplete !== undefined) updateData.onboardingComplete = onboardingComplete === 'true';
 
-    // Update profile picture if uploaded
+    // Update profile picture if uploaded (validate it's an image)
     if (req.files && req.files.profilePicture) {
+      const file = req.files.profilePicture[0];
+      if (!file.mimetype.startsWith('image/')) {
+        return res.status(400).json({ success: false, message: 'Profile picture must be an image' });
+      }
+
       const user = await User.findById(userId);
-      
+      if (!user) {
+        return res.status(404).json({ success: false, message: 'User not found' });
+      }
+
       // Delete old profile picture if exists and not default
       if (user.profilePicture && !user.profilePicture.includes('placeholder')) {
         const oldImagePath = path.join(__dirname, '../../', user.profilePicture);
@@ -75,14 +91,22 @@ exports.updateUserProfile = async (req, res) => {
           fs.unlinkSync(oldImagePath);
         }
       }
-      
-      updateData.profilePicture = `/uploads/${req.files.profilePicture[0].filename}`;
+
+      updateData.profilePicture = `/uploads/${file.filename}`;
     }
 
     // Update banner image if uploaded
     if (req.files && req.files.bannerImage) {
+      const file = req.files.bannerImage[0];
+      if (!file.mimetype.startsWith('image/')) {
+        return res.status(400).json({ success: false, message: 'Banner image must be an image' });
+      }
+
       const user = await User.findById(userId);
-      
+      if (!user) {
+        return res.status(404).json({ success: false, message: 'User not found' });
+      }
+
       // Delete old banner image if exists and not default
       if (user.bannerImage && !user.bannerImage.includes('placeholder')) {
         const oldBannerPath = path.join(__dirname, '../../', user.bannerImage);
@@ -90,8 +114,8 @@ exports.updateUserProfile = async (req, res) => {
           fs.unlinkSync(oldBannerPath);
         }
       }
-      
-      updateData.bannerImage = `/uploads/${req.files.bannerImage[0].filename}`;
+
+      updateData.bannerImage = `/uploads/${file.filename}`;
     }
 
     // Update resume if uploaded
@@ -105,10 +129,15 @@ exports.updateUserProfile = async (req, res) => {
       { new: true, runValidators: true }
     ).select('-password');
 
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    // Return user at top-level to match other endpoints (so client can use res.data.user)
     res.status(200).json({
       success: true,
       message: 'Profile updated successfully',
-      data: user
+      user
     });
   } catch (error) {
     console.error('Update user profile error:', error);
