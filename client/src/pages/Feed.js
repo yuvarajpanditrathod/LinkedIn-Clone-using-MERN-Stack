@@ -36,14 +36,26 @@ const Feed = () => {
           <div
             className="sidebar-profile-banner"
             style={{
-              backgroundImage: `url(${user?.bannerImage || 'https://thingscareerrelated.com/wp-content/uploads/2021/10/default-background-image.png'})`,
+              backgroundImage: `url(${
+                user?.bannerImage
+                  ? user.bannerImage.startsWith('http')
+                    ? user.bannerImage
+                    : `${process.env.REACT_APP_API_URL}${user.bannerImage}`
+                  : 'https://thingscareerrelated.com/wp-content/uploads/2021/10/default-background-image.png'
+              })`,
               backgroundSize: 'cover',
               backgroundPosition: 'center'
             }}
           />
           <div className="sidebar-profile-info">
-            <img 
-              src={user?.profilePicture || 'https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png'} 
+            <img
+              src={
+                user?.profilePicture
+                  ? user.profilePicture.startsWith('http')
+                    ? user.profilePicture
+                    : `${process.env.REACT_APP_API_URL}${user.profilePicture}`
+                  : 'https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png'
+              }
               alt={user?.name}
               className="sidebar-avatar"
               onClick={handleNavigateToProfile}
