@@ -1,16 +1,22 @@
-import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
-import { PostContext } from '../../context/PostContext';
-import EditPost from './EditPost';
-import CommentSection from './CommentSection';
-import { FaThumbsUp, FaComment, FaEdit, FaTrash, FaEllipsisH } from 'react-icons/fa';
-import './PostCard.css';
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import { PostContext } from "../../context/PostContext";
+import EditPost from "./EditPost";
+import CommentSection from "./CommentSection";
+import {
+  FaThumbsUp,
+  FaComment,
+  FaEdit,
+  FaTrash,
+  FaEllipsisH,
+} from "react-icons/fa";
+import "./PostCard.css";
 
 const PostCard = ({ post }) => {
   const { user } = useContext(AuthContext);
   const { likePost, deletePost } = useContext(PostContext);
-  
+
   const [showMenu, setShowMenu] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showComments, setShowComments] = useState(false);
@@ -23,7 +29,7 @@ const PostCard = ({ post }) => {
   };
 
   const handleDelete = async () => {
-    if (window.confirm('Are you sure you want to delete this post?')) {
+    if (window.confirm("Are you sure you want to delete this post?")) {
       await deletePost(post._id);
     }
   };
@@ -45,7 +51,7 @@ const PostCard = ({ post }) => {
     } else if (diffMinutes > 0) {
       return `${diffMinutes}m ago`;
     } else {
-      return 'Just now';
+      return "Just now";
     }
   };
 
@@ -54,7 +60,10 @@ const PostCard = ({ post }) => {
       <div className="post-header">
         <Link to={`/profile/${post.user?._id}`} className="post-user">
           <img
-            src={post.user?.profilePicture || 'https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png'}
+            src={
+              post.user?.profilePicture ||
+              "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"
+            }
             alt={post.user?.name}
             className="post-avatar"
           />
@@ -76,10 +85,12 @@ const PostCard = ({ post }) => {
 
             {showMenu && (
               <div className="post-menu-dropdown">
-                <button onClick={() => {
-                  setShowEditModal(true);
-                  setShowMenu(false);
-                }}>
+                <button
+                  onClick={() => {
+                    setShowEditModal(true);
+                    setShowMenu(false);
+                  }}
+                >
                   <FaEdit /> Edit
                 </button>
                 <button onClick={handleDelete} className="delete-btn">
@@ -93,16 +104,22 @@ const PostCard = ({ post }) => {
 
       <div className="post-content">
         <p>{post.content}</p>
-        {post.image && (
-          (/\.(mp4|webm|mov|ogg)$/i).test(post.image) ? (
+        {post.image &&
+          (/\.(mp4|webm|mov|ogg)$/i.test(post.image) ? (
             <video controls className="post-video">
-              <source src={post.image} type="video/mp4" />
+              <source
+                src={`${process.env.REACT_APP_API_URL}${post.image}`}
+                type="video/mp4"
+              />
               Your browser does not support the video tag.
             </video>
           ) : (
-            <img src={post.image} alt="Post" className="post-image" />
-          )
-        )}
+            <img
+              src={`${process.env.REACT_APP_API_URL}${post.image}`}
+              alt="Post"
+              className="post-image"
+            />
+          ))}
       </div>
 
       <div className="post-stats">
@@ -112,7 +129,7 @@ const PostCard = ({ post }) => {
 
       <div className="post-actions">
         <button
-          className={`post-action-btn ${isLiked ? 'active' : ''}`}
+          className={`post-action-btn ${isLiked ? "active" : ""}`}
           onClick={handleLike}
         >
           <FaThumbsUp />
@@ -131,10 +148,7 @@ const PostCard = ({ post }) => {
       {showComments && <CommentSection post={post} />}
 
       {showEditModal && (
-        <EditPost
-          post={post}
-          onClose={() => setShowEditModal(false)}
-        />
+        <EditPost post={post} onClose={() => setShowEditModal(false)} />
       )}
     </div>
   );
