@@ -53,21 +53,23 @@ export const AuthProvider = ({ children }) => {
 
   // Login user
   const login = async (formData) => {
-    try {
-      const res = await axios.post('/api/auth/login', formData);
-      
-      localStorage.setItem('token', res.data.token);
-      setToken(res.data.token);
-      setUser(res.data.user);
-      
-  // Login succeeded
-      return { success: true };
-    } catch (error) {
-      const message = error.response?.data?.message || 'Login failed';
-  // Login error: handled by caller
-      return { success: false, message };
-    }
-  };
+  try {
+    const res = await axios.post(
+      `${process.env.REACT_APP_API_URL}/api/auth/login`,
+      formData
+    );
+
+    localStorage.setItem('token', res.data.token);
+    setToken(res.data.token);
+    setUser(res.data.user);
+
+    return { success: true };
+  } catch (error) {
+    const message = error.response?.data?.message || 'Login failed';
+    return { success: false, message };
+  }
+};
+
 
   // Logout user
   const logout = () => {
