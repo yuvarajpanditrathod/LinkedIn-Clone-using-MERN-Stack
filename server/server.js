@@ -60,6 +60,10 @@ app.use('/api/users', userRoutes);
 app.use('/api/connections', connectionRoutes);
 app.use('/api/notifications', notificationRoutes);
 
+app.get('/api/test', (req, res) => {
+  res.json({ success: true, message: '✅ Test route loaded correctly' });
+});
+
 // Health check route
 app.get('/api/health', (req, res) => {
   res.json({ 
