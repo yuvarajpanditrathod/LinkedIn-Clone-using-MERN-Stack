@@ -53,6 +53,15 @@ if (mongoUri) {
   console.warn('⚠️  MONGODB_URI not set. Set it in .env (see .env.example). Server will continue but DB features will fail.');
 }
 
+try {
+  const authRoutes = require('./routes/auth');
+  app.use('/api/auth', authRoutes);
+  console.log('✅ Auth routes loaded successfully');
+} catch (err) {
+  console.error('❌ Error loading auth routes:', err.message);
+}
+
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
