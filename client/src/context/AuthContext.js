@@ -37,38 +37,38 @@ export const AuthProvider = ({ children }) => {
   const register = async (formData) => {
     try {
       const res = await axios.post('/api/auth/register', formData);
-      
+
       localStorage.setItem('token', res.data.token);
       setToken(res.data.token);
       setUser(res.data.user);
-      
-  // Registration succeeded
+
+      // Registration succeeded
       return { success: true };
     } catch (error) {
       const message = error.response?.data?.message || 'Registration failed';
-  // Registration error: handled by caller
+      // Registration error: handled by caller
       return { success: false, message };
     }
   };
 
   // Login user
   const login = async (formData) => {
-  try {
-    const res = await axios.post(
-      `${process.env.REACT_APP_API_URL}/api/auth/login`,
-      formData
-    );
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/auth/login`,
+        formData
+      );
 
-    localStorage.setItem('token', res.data.token);
-    setToken(res.data.token);
-    setUser(res.data.user);
+      localStorage.setItem('token', res.data.token);
+      setToken(res.data.token);
+      setUser(res.data.user);
 
-    return { success: true };
-  } catch (error) {
-    const message = error.response?.data?.message || 'Login failed';
-    return { success: false, message };
-  }
-};
+      return { success: true };
+    } catch (error) {
+      const message = error.response?.data?.message || 'Login failed';
+      return { success: false, message };
+    }
+  };
 
 
   // Logout user
@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     setUser(null);
     delete axios.defaults.headers.common['Authorization'];
-  // Logged out
+    // Logged out
   };
 
   // Update user
