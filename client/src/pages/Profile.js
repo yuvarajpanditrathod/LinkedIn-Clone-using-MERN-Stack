@@ -24,8 +24,11 @@ const Profile = () => {
 
   useEffect(() => {
     const load = async () => {
+      if (!userId) return; // ✅ avoid undefined
       try {
-        const res = await axios.get(`/api/users/${userId}`);
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/users/${userId}`
+        );
         setProfile(res.data.user);
         setPosts(res.data.posts);
       } catch (error) {
@@ -36,7 +39,9 @@ const Profile = () => {
 
       if (currentUser && userId !== currentUser._id) {
         try {
-          const res2 = await axios.get(`/api/connections/status/${userId}`);
+          const res2 = await axios.get(
+            `${process.env.REACT_APP_API_URL}/api/connections/status/${userId}`
+          );
           if (res2.data.success) {
             setConnectionStatus(res2.data.status);
             if (res2.data.requestId) setRequestId(res2.data.requestId);
@@ -50,15 +55,16 @@ const Profile = () => {
     load();
   }, [userId, currentUser]);
 
+
   const handleSendRequest = async () => {
     try {
       const res = await axios.post(`/api/connections/request/${userId}`, {}, { headers: token ? { Authorization: `Bearer ${token}` } : {} });
-  // Connection request sent (notification suppressed)
+      // Connection request sent (notification suppressed)
       setConnectionStatus('pending');
       setRequestId(res.data.data._id);
     } catch (err) {
       console.error('Send request error', err);
-  console.error(err.response?.data?.message || 'Failed to send request');
+      console.error(err.response?.data?.message || 'Failed to send request');
     }
   };
 
@@ -69,41 +75,41 @@ const Profile = () => {
       setRequestId(null);
     } catch (err) {
       console.error('Withdraw error', err);
-  console.error(err.response?.data?.message || 'Failed to withdraw request');
+      console.error(err.response?.data?.message || 'Failed to withdraw request');
     }
   };
 
   const handleAccept = async () => {
     try {
       await axios.put(`/api/connections/accept/${requestId}`);
-  // Connection accepted (notification suppressed)
+      // Connection accepted (notification suppressed)
       setConnectionStatus('connected');
     } catch (err) {
       console.error('Accept error', err);
-  console.error(err.response?.data?.message || 'Failed to accept');
+      console.error(err.response?.data?.message || 'Failed to accept');
     }
   };
 
   const handleReject = async () => {
     try {
       await axios.put(`/api/connections/reject/${requestId}`);
-  // Connection rejected (notification suppressed)
+      // Connection rejected (notification suppressed)
       setConnectionStatus('none');
       setRequestId(null);
     } catch (err) {
       console.error('Reject error', err);
-  console.error(err.response?.data?.message || 'Failed to reject');
+      console.error(err.response?.data?.message || 'Failed to reject');
     }
   };
 
   const handleRemoveConnection = async () => {
     try {
       await axios.delete(`/api/connections/${userId}`);
-  // Connection removed (notification suppressed)
+      // Connection removed (notification suppressed)
       setConnectionStatus('none');
     } catch (err) {
       console.error('Remove connection error', err);
-  console.error(err.response?.data?.message || 'Failed to remove connection');
+      console.error(err.response?.data?.message || 'Failed to remove connection');
     }
   };
 
@@ -137,16 +143,15 @@ const Profile = () => {
           <div
             className="profile-banner"
             style={{
-              backgroundImage: `url(${
-                profile.bannerImage
+              backgroundImage: `url(${profile.bannerImage
                   ? profile.bannerImage.startsWith('http')
                     ? profile.bannerImage
                     : `${process.env.REACT_APP_API_URL}${profile.bannerImage}`
                   : 'https://thingscareerrelated.com/wp-content/uploads/2021/10/default-background-image.png'
-              })`,
+                })`,
             }}
           ></div>
-          
+
           <div className="profile-content">
             <div className="profile-main-info">
               <div className="profile-avatar-wrapper">
@@ -203,7 +208,7 @@ const Profile = () => {
               <div className="profile-info">
                 <h1>{profile.name}</h1>
                 <p className="profile-headline">{profile.headline}</p>
-                
+
                 {profile.location && (
                   <p className="profile-location">
                     <FaMapMarkerAlt /> {profile.location}
@@ -291,9 +296,9 @@ const Profile = () => {
                   <FaFileAlt />
                   <h3>Resume</h3>
                 </div>
-                <a 
-                  href={profile.resumeUrl} 
-                  target="_blank" 
+                <a
+                  href={profile.resumeUrl}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="resume-link"
                 >
@@ -308,7 +313,7 @@ const Profile = () => {
         {/* Posts Section */}
         <div className="profile-posts">
           <h2>Posts ({posts.length})</h2>
-          
+
           {posts.length === 0 ? (
             <div className="no-posts">
               <p>{isOwnProfile ? 'You haven\'t posted anything yet' : 'No posts yet'}</p>
