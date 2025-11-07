@@ -1,12 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { AuthContext } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import PostCard from '../components/posts/PostCard';
-import EditProfile from '../components/profile/EditProfile';
-import { FaMapMarkerAlt, FaEdit, FaGraduationCap, FaBriefcase, FaFileAlt } from 'react-icons/fa';
-import './Profile.css';
+import React, { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import PostCard from "../components/posts/PostCard";
+import EditProfile from "../components/profile/EditProfile";
+import {
+  FaMapMarkerAlt,
+  FaEdit,
+  FaGraduationCap,
+  FaBriefcase,
+  FaFileAlt,
+} from "react-icons/fa";
+import "./Profile.css";
 
 const Profile = () => {
   const { userId } = useParams();
@@ -17,7 +23,7 @@ const Profile = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [connectionStatus, setConnectionStatus] = useState('none'); // none, pending, received, connected
+  const [connectionStatus, setConnectionStatus] = useState("none"); // none, pending, received, connected
   const [requestId, setRequestId] = useState(null);
 
   const isOwnProfile = currentUser && currentUser._id === userId;
@@ -29,7 +35,7 @@ const Profile = () => {
         setProfile(res.data.user);
         setPosts(res.data.posts);
       } catch (error) {
-        console.error('Fetch profile error:', error);
+        console.error("Fetch profile error:", error);
       } finally {
         setLoading(false);
       }
@@ -42,7 +48,7 @@ const Profile = () => {
             if (res2.data.requestId) setRequestId(res2.data.requestId);
           }
         } catch (err) {
-          console.error('Fetch connection status error:', err);
+          console.error("Fetch connection status error:", err);
         }
       }
     };
@@ -52,58 +58,66 @@ const Profile = () => {
 
   const handleSendRequest = async () => {
     try {
-      const res = await axios.post(`/api/connections/request/${userId}`, {}, { headers: token ? { Authorization: `Bearer ${token}` } : {} });
-  // Connection request sent (notification suppressed)
-      setConnectionStatus('pending');
+      const res = await axios.post(
+        `/api/connections/request/${userId}`,
+        {},
+        { headers: token ? { Authorization: `Bearer ${token}` } : {} }
+      );
+      // Connection request sent (notification suppressed)
+      setConnectionStatus("pending");
       setRequestId(res.data.data._id);
     } catch (err) {
-      console.error('Send request error', err);
-  console.error(err.response?.data?.message || 'Failed to send request');
+      console.error("Send request error", err);
+      console.error(err.response?.data?.message || "Failed to send request");
     }
   };
 
   const handleWithdrawRequest = async () => {
     try {
       await axios.delete(`/api/connections/request/${userId}`);
-      setConnectionStatus('none');
+      setConnectionStatus("none");
       setRequestId(null);
     } catch (err) {
-      console.error('Withdraw error', err);
-  console.error(err.response?.data?.message || 'Failed to withdraw request');
+      console.error("Withdraw error", err);
+      console.error(
+        err.response?.data?.message || "Failed to withdraw request"
+      );
     }
   };
 
   const handleAccept = async () => {
     try {
       await axios.put(`/api/connections/accept/${requestId}`);
-  // Connection accepted (notification suppressed)
-      setConnectionStatus('connected');
+      // Connection accepted (notification suppressed)
+      setConnectionStatus("connected");
     } catch (err) {
-      console.error('Accept error', err);
-  console.error(err.response?.data?.message || 'Failed to accept');
+      console.error("Accept error", err);
+      console.error(err.response?.data?.message || "Failed to accept");
     }
   };
 
   const handleReject = async () => {
     try {
       await axios.put(`/api/connections/reject/${requestId}`);
-  // Connection rejected (notification suppressed)
-      setConnectionStatus('none');
+      // Connection rejected (notification suppressed)
+      setConnectionStatus("none");
       setRequestId(null);
     } catch (err) {
-      console.error('Reject error', err);
-  console.error(err.response?.data?.message || 'Failed to reject');
+      console.error("Reject error", err);
+      console.error(err.response?.data?.message || "Failed to reject");
     }
   };
 
   const handleRemoveConnection = async () => {
     try {
       await axios.delete(`/api/connections/${userId}`);
-  // Connection removed (notification suppressed)
-      setConnectionStatus('none');
+      // Connection removed (notification suppressed)
+      setConnectionStatus("none");
     } catch (err) {
-      console.error('Remove connection error', err);
-  console.error(err.response?.data?.message || 'Failed to remove connection');
+      console.error("Remove connection error", err);
+      console.error(
+        err.response?.data?.message || "Failed to remove connection"
+      );
     }
   };
 
@@ -134,18 +148,30 @@ const Profile = () => {
       <div className="profile-wrapper">
         {/* Profile Header */}
         <div className="profile-card">
-          <div 
-            className="profile-banner" 
-            style={{ 
-              backgroundImage: `url(${profile.bannerImage || 'https://thingscareerrelated.com/wp-content/uploads/2021/10/default-background-image.png'})` 
+          <div
+            className="profile-banner"
+            style={{
+              backgroundImage: `url(${
+                profile.bannerImage
+                  ? profile.bannerImage.startsWith("http")
+                    ? profile.bannerImage
+                    : `${process.env.REACT_APP_API_URL}${profile.bannerImage}`
+                  : "https://thingscareerrelated.com/wp-content/uploads/2021/10/default-background-image.png"
+              })`,
             }}
           ></div>
-          
+
           <div className="profile-content">
             <div className="profile-main-info">
               <div className="profile-avatar-wrapper">
                 <img
-                  src={profile.profilePicture || 'https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png'}
+                  src={
+                    profile.profilePicture
+                      ? profile.profilePicture.startsWith("http")
+                        ? profile.profilePicture
+                        : `${process.env.REACT_APP_API_URL}${profile.profilePicture}`
+                      : "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"
+                  }
                   alt={profile.name}
                   className="profile-avatar"
                 />
@@ -161,28 +187,54 @@ const Profile = () => {
                 </button>
               ) : (
                 <div className="profile-actions">
-                  {connectionStatus === 'none' && (
-                    <button className="search-btn search-btn-connect" onClick={handleSendRequest}>Connect</button>
+                  {connectionStatus === "none" && (
+                    <button
+                      className="search-btn search-btn-connect"
+                      onClick={handleSendRequest}
+                    >
+                      Connect
+                    </button>
                   )}
 
-                  {connectionStatus === 'pending' && (
+                  {connectionStatus === "pending" && (
                     <>
-                      <button className="search-btn search-btn-pending" disabled>Pending</button>
-                      <button className="btn-withdraw" onClick={handleWithdrawRequest}>Withdraw</button>
+                      <button
+                        className="search-btn search-btn-pending"
+                        disabled
+                      >
+                        Pending
+                      </button>
+                      <button
+                        className="btn-withdraw"
+                        onClick={handleWithdrawRequest}
+                      >
+                        Withdraw
+                      </button>
                     </>
                   )}
 
-                  {connectionStatus === 'received' && (
+                  {connectionStatus === "received" && (
                     <>
-                      <button className="btn-accept" onClick={handleAccept}>Accept</button>
-                      <button className="btn-reject" onClick={handleReject}>Reject</button>
+                      <button className="btn-accept" onClick={handleAccept}>
+                        Accept
+                      </button>
+                      <button className="btn-reject" onClick={handleReject}>
+                        Reject
+                      </button>
                     </>
                   )}
 
-                  {connectionStatus === 'connected' && (
+                  {connectionStatus === "connected" && (
                     <>
-                      <button className="btn-message" onClick={handleMessage}>Message</button>
-                      <button className="btn-remove" onClick={handleRemoveConnection}>Remove</button>
+                      <button className="btn-message" onClick={handleMessage}>
+                        Message
+                      </button>
+                      <button
+                        className="btn-remove"
+                        onClick={handleRemoveConnection}
+                      >
+                        Remove
+                      </button>
                     </>
                   )}
                 </div>
@@ -191,7 +243,7 @@ const Profile = () => {
               <div className="profile-info">
                 <h1>{profile.name}</h1>
                 <p className="profile-headline">{profile.headline}</p>
-                
+
                 {profile.location && (
                   <p className="profile-location">
                     <FaMapMarkerAlt /> {profile.location}
@@ -242,11 +294,13 @@ const Profile = () => {
                         )}
                         {(edu.startYear || edu.endYear) && (
                           <p className="education-years">
-                            {edu.startYear} - {edu.endYear || 'Present'}
+                            {edu.startYear} - {edu.endYear || "Present"}
                           </p>
                         )}
                         {edu.description && (
-                          <p className="education-description">{edu.description}</p>
+                          <p className="education-description">
+                            {edu.description}
+                          </p>
                         )}
                       </div>
                     </div>
@@ -279,9 +333,9 @@ const Profile = () => {
                   <FaFileAlt />
                   <h3>Resume</h3>
                 </div>
-                <a 
-                  href={profile.resumeUrl} 
-                  target="_blank" 
+                <a
+                  href={profile.resumeUrl}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="resume-link"
                 >
@@ -296,14 +350,18 @@ const Profile = () => {
         {/* Posts Section */}
         <div className="profile-posts">
           <h2>Posts ({posts.length})</h2>
-          
+
           {posts.length === 0 ? (
             <div className="no-posts">
-              <p>{isOwnProfile ? 'You haven\'t posted anything yet' : 'No posts yet'}</p>
+              <p>
+                {isOwnProfile
+                  ? "You haven't posted anything yet"
+                  : "No posts yet"}
+              </p>
             </div>
           ) : (
             <div className="posts-list">
-              {posts.map(post => (
+              {posts.map((post) => (
                 <PostCard key={post._id} post={post} />
               ))}
             </div>
