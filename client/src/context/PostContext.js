@@ -32,11 +32,16 @@ export const PostProvider = ({ children }) => {
   // Create post
   const createPost = async (formData) => {
     try {
-      const res = await axios.post("/api/posts", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/posts`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
       setPosts([res.data.post, ...posts]);
       // Post created successfully (notification suppressed)
